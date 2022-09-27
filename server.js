@@ -3,6 +3,8 @@ import data from './data.js';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import seedRouter from './routes/seedRoutes.js';
+import productRouter from './routes/productRoutes.js';
 
 dotenv.config();
 
@@ -17,13 +19,11 @@ mongoose
 
 const app = express();
 app.use(cors());
+app.use('/api/seed', seedRouter);
+app.use('/api/products', productRouter);
 
-// app.get('/', (req, res) => {
-//   res.send('web server running');
-// });
-
-app.get('/api/products', (req, res) => {
-  res.send(data.products);
+app.get('/', (req, res) => {
+  res.send('web server running');
 });
 
 app.get('/api/products/slug/:slug', (req, res) => {
