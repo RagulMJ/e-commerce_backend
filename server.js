@@ -1,8 +1,19 @@
 import express from 'express';
 import data from './data.js';
 import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-// const { param } = require('express/lib/request');
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('connected to db');
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 const app = express();
 app.use(cors());
@@ -10,8 +21,7 @@ app.use(cors());
 // app.get('/', (req, res) => {
 //   res.send('web server running');
 // });
-// const product = data.products.find((x) => x.slug === 'nike-slime-pant');
-// console.log(product.slug);
+
 app.get('/api/products', (req, res) => {
   res.send(data.products);
 });
